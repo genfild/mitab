@@ -23,7 +23,7 @@ namespace MapInfo.IO
 
         protected long Position
         {
-            get { return m_fp.Position ; }
+            get { return m_fp.Position; }
             set { m_fp.Position = value; }
         }
 
@@ -88,7 +88,7 @@ namespace MapInfo.IO
         #endregion
 
         public TABRawBinBlock() { }
-        public TABRawBinBlock(Stream stream) 
+        public TABRawBinBlock(Stream stream)
         {
             m_fp = stream;
         }
@@ -218,76 +218,76 @@ namespace MapInfo.IO
         // * Returns the new object if succesful or NULL if an error happened, in 
         // * which case CPLError() will have been called.
         // *********************************************************************
-//        private TABRawBinBlock TABCreateMAPBlockFromFile(ref FILE fpSrc, int nOffset, int nSize, GBool bHardBlockSize, TABAccess eAccessMode)
-//{
-//    TABRawBinBlock poBlock = null;
-//    GByte pabyBuf;
+        //        private TABRawBinBlock TABCreateMAPBlockFromFile(ref FILE fpSrc, int nOffset, int nSize, GBool bHardBlockSize, TABAccess eAccessMode)
+        //{
+        //    TABRawBinBlock poBlock = null;
+        //    GByte pabyBuf;
 
-//    if (fpSrc == null || nSize == 0)
-//    {
-//        CPLError(CE_Failure, CPLE_AssertionFailed, "TABCreateMAPBlockFromFile(): Assertion Failed!");
-//        return null;
-//    }
+        //    if (fpSrc == null || nSize == 0)
+        //    {
+        //        CPLError(CE_Failure, CPLE_AssertionFailed, "TABCreateMAPBlockFromFile(): Assertion Failed!");
+        //        return null;
+        //    }
 
-////    ----------------------------------------------------------------
-////     * Alloc a buffer to contain the data
-////     *---------------------------------------------------------------
-//    pabyBuf = (GByte)CPLMalloc(nSize *sizeof(GByte));
+        ////    ----------------------------------------------------------------
+        ////     * Alloc a buffer to contain the data
+        ////     *---------------------------------------------------------------
+        //    pabyBuf = (GByte)CPLMalloc(nSize *sizeof(GByte));
 
-////    ----------------------------------------------------------------
-////     * Read from the file
-////     *---------------------------------------------------------------
-//    if (VSIFSeek(fpSrc, nOffset, SEEK_SET) != 0 || VSIFRead(pabyBuf, sizeof(GByte), nSize, fpSrc)!=(uint)nSize)
-//    {
-//        CPLError(CE_Failure, CPLE_FileIO, "TABCreateMAPBlockFromFile() failed reading %d bytes at offset %d.", nSize, nOffset);
-//        CPLFree(pabyBuf);
-//        return null;
-//    }
+        ////    ----------------------------------------------------------------
+        ////     * Read from the file
+        ////     *---------------------------------------------------------------
+        //    if (VSIFSeek(fpSrc, nOffset, SEEK_SET) != 0 || VSIFRead(pabyBuf, sizeof(GByte), nSize, fpSrc)!=(uint)nSize)
+        //    {
+        //        CPLError(CE_Failure, CPLE_FileIO, "TABCreateMAPBlockFromFile() failed reading %d bytes at offset %d.", nSize, nOffset);
+        //        CPLFree(pabyBuf);
+        //        return null;
+        //    }
 
-////    ----------------------------------------------------------------
-////     * Create an object of the right type
-////     * Header block is different: it does not start with the object 
-////     * type byte but it is always the first block in a file
-////     *---------------------------------------------------------------
-//    if (nOffset == 0)
-//    {
-//        poBlock = new TABMAPHeaderBlock;
-//    }
-//    else
-//    {
-//        switch(pabyBuf[0])
-//        {
-//          case TABMAP_INDEX_BLOCK:
-//            poBlock = new TABMAPIndexBlock(eAccessMode);
-//            break;
-//          case TABMAP_OBJECT_BLOCK:
-//            poBlock = new TABMAPObjectBlock(eAccessMode);
-//            break;
-//          case TABMAP_COORD_BLOCK:
-//            poBlock = new TABMAPCoordBlock(eAccessMode);
-//            break;
-//          case TABMAP_TOOL_BLOCK:
-//            poBlock = new TABMAPToolBlock(eAccessMode);
-//            break;
-//          case TABMAP_GARB_BLOCK:
-//          default:
-//            poBlock = new TABRawBinBlock(eAccessMode, bHardBlockSize);
-//            break;
-//        }
-//    }
+        ////    ----------------------------------------------------------------
+        ////     * Create an object of the right type
+        ////     * Header block is different: it does not start with the object 
+        ////     * type byte but it is always the first block in a file
+        ////     *---------------------------------------------------------------
+        //    if (nOffset == 0)
+        //    {
+        //        poBlock = new TABMAPHeaderBlock;
+        //    }
+        //    else
+        //    {
+        //        switch(pabyBuf[0])
+        //        {
+        //          case TABMAP_INDEX_BLOCK:
+        //            poBlock = new TABMAPIndexBlock(eAccessMode);
+        //            break;
+        //          case TABMAP_OBJECT_BLOCK:
+        //            poBlock = new TABMAPObjectBlock(eAccessMode);
+        //            break;
+        //          case TABMAP_COORD_BLOCK:
+        //            poBlock = new TABMAPCoordBlock(eAccessMode);
+        //            break;
+        //          case TABMAP_TOOL_BLOCK:
+        //            poBlock = new TABMAPToolBlock(eAccessMode);
+        //            break;
+        //          case TABMAP_GARB_BLOCK:
+        //          default:
+        //            poBlock = new TABRawBinBlock(eAccessMode, bHardBlockSize);
+        //            break;
+        //        }
+        //    }
 
-////    ----------------------------------------------------------------
-////     * Init new object with the data we just read
-////     *---------------------------------------------------------------
-//    if (poBlock.InitBlockFromData(pabyBuf, nSize, nSize, 0, fpSrc, nOffset) != 0)
-//    {
-//        // Some error happened... and CPLError() has been called
-//        poBlock = null;
-//        poBlock = null;
-//    }
+        ////    ----------------------------------------------------------------
+        ////     * Init new object with the data we just read
+        ////     *---------------------------------------------------------------
+        //    if (poBlock.InitBlockFromData(pabyBuf, nSize, nSize, 0, fpSrc, nOffset) != 0)
+        //    {
+        //        // Some error happened... and CPLError() has been called
+        //        poBlock = null;
+        //        poBlock = null;
+        //    }
 
-//    return poBlock;
-//}
+        //    return poBlock;
+        //}
 
         public SupportedBlockTypes GetBlockClass()
         {
@@ -302,7 +302,7 @@ namespace MapInfo.IO
                 //Position = 0;
                 return (SupportedBlockTypes)Read(1)[0];
             }
-            
+
         }
 
         private byte[] read = new byte[8];
@@ -341,30 +341,30 @@ namespace MapInfo.IO
             byte[] read = new byte[8];
             //for (int i = 0; i < list.Length; i++)
             //{
-                if ((var) is byte)
-                { 
-                    m_fp.Read(read, 0, 1);
-                    var = read[0];
-                }
-                else if ((var) is short)
-                {
-                    m_fp.Read(read, 0, 2);
-                    var = BitConverter.ToInt16(read, 0);
-                }
-                else if ((var) is int)
-                {
-                    m_fp.Read(read, 0, 4);
-                    var = BitConverter.ToInt32(read, 0);
-                }
-                else if ((var) is long)
-                {
-                    m_fp.Read(read, 0, 8);
-                    var = BitConverter.ToInt64(read, 0);
-                }
-                else if ((var) is double)
-                {
-                    m_fp.Read(read, 0, 8);
-                    var = BitConverter.ToDouble(read, 0);
+            if ((var) is byte)
+            {
+                m_fp.Read(read, 0, 1);
+                var = read[0];
+            }
+            else if ((var) is short)
+            {
+                m_fp.Read(read, 0, 2);
+                var = BitConverter.ToInt16(read, 0);
+            }
+            else if ((var) is int)
+            {
+                m_fp.Read(read, 0, 4);
+                var = BitConverter.ToInt32(read, 0);
+            }
+            else if ((var) is long)
+            {
+                m_fp.Read(read, 0, 8);
+                var = BitConverter.ToInt64(read, 0);
+            }
+            else if ((var) is double)
+            {
+                m_fp.Read(read, 0, 8);
+                var = BitConverter.ToDouble(read, 0);
                 //};
             }
         }
@@ -449,7 +449,7 @@ namespace MapInfo.IO
             Add(block);
         }
 
-        public virtual void Add(byte[] block) 
+        public virtual void Add(byte[] block)
         {
             read = block;
             raws.Add(read);
@@ -1022,13 +1022,13 @@ namespace MapInfo.IO
             while (Position < m_numDataBytes + HeaderSize)
             {
 
-                TABMAPObjHdr poObj = new TABMAPObjHdr();
-                Read(ref poObj.m_nType);
+                MapFileRecord poObj = new MapFileRecord();
+                Read(ref poObj.ShapeType);
                 Read(ref poObj.MBR.Id);
-                switch ((GeometryType)poObj.m_nType)
+                switch ((GeometryType)poObj.ShapeType)
                 {
                     case GeometryType.NONE:
-                        poObj = new TABMAPObjNone();
+                        //poObj = new TABMAPObjNone();
                         break;
                     case GeometryType.SYMBOL_C:
                         //ShortPoint [ID 1] (length: &HA):        [?]
@@ -1036,11 +1036,14 @@ namespace MapInfo.IO
                         //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
                         //&H5     2       2       Coordinate value
                         //&H9     1       1       Symbol type number from Resource Block
-                        TABMAPObjPoint ShortPoint = new TABMAPObjPoint(poObj);
-                        ShortPoint.Position.X = m_nCenterX + ReadInt16();
-                        ShortPoint.Position.Y = m_nCenterY + ReadInt16();
-                        Read(ref ShortPoint.m_nSymbolId);
-                        fetures.Add(ShortPoint);
+                        //TABMAPObjPoint ShortPoint = new TABMAPObjPoint(poObj);
+                        poObj.Points.Add(new TABMAPVertex()
+                        {
+                            X = m_nCenterX + ReadInt16(),
+                            Y = m_nCenterY + ReadInt16()
+                        });
+                        Read(ref poObj.Symbol);
+                        fetures.Add(poObj);
                         break;
                     case GeometryType.SYMBOL:
                         //LongPoint [ID 2] (length: &HE):
@@ -1048,24 +1051,60 @@ namespace MapInfo.IO
                         //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
                         //&H5     4       2       Coordinate value
                         //&HD     1       1       Symbol type number from Resource Block
-                        TABMAPObjPoint LongPoint = (TABMAPObjPoint)poObj;
-                        Read(ref LongPoint.Position.X);
-                        Read(ref LongPoint.Position.Y);
-                        Read(ref LongPoint.m_nSymbolId);
-                        fetures.Add(LongPoint);
+                        poObj.Points.Add(new TABMAPVertex()
+                        {
+                            X = ReadInt32(),
+                            Y = ReadInt32()
+                        });
+                        Read(ref poObj.Symbol);
+                        fetures.Add(poObj);
                         break;
-                    //  case GeometryType.FONTSYMBOL_C:
-                    //  case GeometryType.FONTSYMBOL:
+                    //case GeometryType.FONTSYMBOL_C:
+                    //case GeometryType.FONTSYMBOL:
                     //    poObj = new TABMAPObjFontPoint;
-                    //    break;
+                    //break;
                     //  case GeometryType.CUSTOMSYMBOL_C:
                     //  case GeometryType.CUSTOMSYMBOL:
                     //    poObj = new TABMAPObjCustomPoint;
                     //    break;
-                    //  case GeometryType.LINE_C:
-                    //  case GeometryType.LINE:
-                    //    poObj = new TABMAPObjLine;
-                    //    break;
+                    case GeometryType.LINE_C:
+                        //ShortLine [ID 4] (length: &HE):
+                        //&H0     1       1       Identifier (Value: &H4) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     4       2       Coordinate value
+                        //&HD     1       1       Line type number from Resource Block
+                        poObj.Points.Add(new TABMAPVertex()
+                        {
+                            X = m_nCenterX + ReadInt16(),
+                            Y = m_nCenterY + ReadInt16()
+                        });
+                        poObj.Points.Add(new TABMAPVertex()
+                        {
+                            X = m_nCenterX + ReadInt16(),
+                            Y = m_nCenterY + ReadInt16()
+                        });
+                        Read(ref poObj.Symbol);
+                        fetures.Add(poObj);
+                        break;
+                    case GeometryType.LINE:
+                    //LongLine [ID 5] (length: &H16):
+                    //&H0     1       1       Identifier (Value: &H5) [!]
+                    //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                    //&H5     4       4       MBR
+                    //&H15	1	1       Line type number from Resource Block
+                        poObj.Points.Add(new TABMAPVertex()
+                        {
+                            X = ReadInt32(),
+                            Y = ReadInt32()
+                        });
+                        poObj.Points.Add(new TABMAPVertex()
+                        {
+                            X = ReadInt32(),
+                            Y = ReadInt32()
+                        });
+                        Read(ref poObj.Symbol);
+                        fetures.Add(poObj);
+                        break;
                     //  case GeometryType.PLINE_C:
                     //  case GeometryType.PLINE:
                     //  case GeometryType.REGION_C:

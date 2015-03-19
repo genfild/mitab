@@ -9,6 +9,8 @@
     using System.Text;
     using System.Collections;
     using System.Linq;
+    //using GeoAPI.Geometries;
+
 
 namespace MapInfo.IO
 {
@@ -154,14 +156,16 @@ namespace MapInfo.IO
     {
         #region Private fields
 
-        private byte _shapeType;
+        public byte ShapeType;
+
+        public byte Symbol;
 
         public TABMAPIndexEntry MBR;
 
         private int _contentLength;
 
         private Collection<int> _parts = new Collection<int>();
-        private Collection<ICoordinate> _points = new Collection<ICoordinate>();
+        private Collection<TABMAPVertex> _points = new Collection<TABMAPVertex>();
 
         private DataRow _attributes;
 
@@ -187,15 +191,6 @@ namespace MapInfo.IO
         {
             get { return _contentLength; }
             set { _contentLength = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the shape type.
-        /// </summary>
-        public byte ShapeType
-        {
-            get { return _shapeType; }
-            set { _shapeType = value; }
         }
 
         /// <summary>
@@ -228,7 +223,7 @@ namespace MapInfo.IO
         /// Gets a collection of coordinates of
         /// the geometry.
         /// </summary>
-        public Collection<ICoordinate> Points
+        public Collection<TABMAPVertex> Points
         {
             get { return _points; }
         }
@@ -254,8 +249,8 @@ namespace MapInfo.IO
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("ShapeFileRecord: RecordNumber={0}, ContentLength={1}, ShapeType={2}",
-                this._recordNumber, this._contentLength, this._shapeType);
+            //sb.AppendFormat("ShapeFileRecord: RecordNumber={0}, ContentLength={1}, ShapeType={2}",
+            //     this._contentLength, this._shapeType); //this._recordNumber,
 
             return sb.ToString();
         }
