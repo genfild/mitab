@@ -1030,6 +1030,7 @@ namespace MapInfo.IO
                     case GeometryType.NONE:
                         //poObj = new TABMAPObjNone();
                         break;
+                    #region GeometryType.SYMBOL_C
                     case GeometryType.SYMBOL_C:
                         //ShortPoint [ID 1] (length: &HA):        [?]
                         //&H0     1       1       Identifier (Value: &H1) [!]
@@ -1044,7 +1045,9 @@ namespace MapInfo.IO
                         });
                         Read(ref poObj.Symbol);
                         fetures.Add(poObj);
-                        break;
+                        break; 
+                    #endregion
+                    #region GeometryType.SYMBOL
                     case GeometryType.SYMBOL:
                         //LongPoint [ID 2] (length: &HE):
                         //&H0     1       1       Identifier (Value: &H2) [!]
@@ -1058,7 +1061,8 @@ namespace MapInfo.IO
                         });
                         Read(ref poObj.Symbol);
                         fetures.Add(poObj);
-                        break;
+                        break; 
+                    #endregion
                     //case GeometryType.FONTSYMBOL_C:
                     //case GeometryType.FONTSYMBOL:
                     //    poObj = new TABMAPObjFontPoint;
@@ -1067,6 +1071,7 @@ namespace MapInfo.IO
                     //  case GeometryType.CUSTOMSYMBOL:
                     //    poObj = new TABMAPObjCustomPoint;
                     //    break;
+                    #region GeometryType.LINE_C
                     case GeometryType.LINE_C:
                         //ShortLine [ID 4] (length: &HE):
                         //&H0     1       1       Identifier (Value: &H4) [!]
@@ -1085,13 +1090,15 @@ namespace MapInfo.IO
                         });
                         Read(ref poObj.Symbol);
                         fetures.Add(poObj);
-                        break;
+                        break; 
+                    #endregion
+                    #region GeometryType.LINE
                     case GeometryType.LINE:
-                    //LongLine [ID 5] (length: &H16):
-                    //&H0     1       1       Identifier (Value: &H5) [!]
-                    //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
-                    //&H5     4       4       MBR
-                    //&H15	1	1       Line type number from Resource Block
+                        //LongLine [ID 5] (length: &H16):
+                        //&H0     1       1       Identifier (Value: &H5) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     4       4       MBR
+                        //&H15	1	1       Line type number from Resource Block
                         poObj.Points.Add(new TABMAPVertex()
                         {
                             X = ReadInt32(),
@@ -1104,7 +1111,8 @@ namespace MapInfo.IO
                         });
                         Read(ref poObj.Symbol);
                         fetures.Add(poObj);
-                        break;
+                        break; 
+                    #endregion
                     //  case GeometryType.PLINE_C:
                     //  case GeometryType.PLINE:
                     //  case GeometryType.REGION_C:
@@ -1150,7 +1158,7 @@ namespace MapInfo.IO
                     //    poObj = new TABMAPObjCollection();
                     //break;
                     default:
-                        throw new ArgumentException(poObj.m_nType.ToString());
+                        throw new ArgumentException(poObj.ShapeType.ToString());
                     //break;
                 }
             }
