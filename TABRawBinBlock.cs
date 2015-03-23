@@ -1113,10 +1113,83 @@ namespace MapInfo.IO
                         fetures.Add(poObj);
                         break; 
                     #endregion
-                    //  case GeometryType.PLINE_C:
-                    //  case GeometryType.PLINE:
-                    //  case GeometryType.REGION_C:
-                    //  case GeometryType.REGION:
+                    #region GeometryType.PLINE_C
+                    case GeometryType.PLINE_C:
+                        //ShortPolyline [ID 7] (length: &H1A):
+                        //&H0     1       1       Identifier (Value: &H7) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     4       1       Offset of coordinate data in Coordinate Definition Block
+                        //&H9     4       1       Bytes to read for coordinates from Coordinate Definition Block [?]
+                        //&HD     2       2       Label location coordinates
+                        //&H11    2       4       MBR     
+                        //&H19    1       1       Line type number from Resource Block
+                        Read(ref poObj.CoordBlockPtr);
+                        Read(ref poObj.CoordDataSize);
+                        poObj.LabelLocation = new TABMAPVertex()
+                        {
+                            X = m_nCenterX + ReadInt16(),
+                            Y = m_nCenterY + ReadInt16()
+                        };
+                        poObj.MBR.XMin = m_nCenterX + ReadInt16();
+                        poObj.MBR.YMin = m_nCenterY + ReadInt16();
+                        poObj.MBR.XMax = m_nCenterX + ReadInt16();
+                        poObj.MBR.YMax = m_nCenterY + ReadInt16();
+                        Read(ref poObj.Symbol);
+                        break;
+                    #endregion  
+                    #region GeometryType.PLINE
+                    case GeometryType.PLINE:
+                        //LongPolyline [ID 8] (length: &H26):
+                        //&H0     1       1       Identifier (Value: &H8) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)
+                        //&H5     4       1       Offset of coordinate data in Coordinate Definition Block
+                        //&H9     4       1       Bytes to read for coordinates from Coordinate Definition Block [?]
+                        //&HD     4       2       Label location coordinates
+                        //&H15    4       4       MBR
+                        //&H25    1       1       Line type number from Resource Block
+                        Read(ref poObj.CoordBlockPtr);
+                        Read(ref poObj.CoordDataSize);
+                        poObj.LabelLocation = new TABMAPVertex()
+                        {
+                            X = ReadInt32(),
+                            Y = ReadInt32()
+                        };
+                        poObj.MBR.XMin = ReadInt32();
+                        poObj.MBR.YMin = ReadInt32();
+                        poObj.MBR.XMax = ReadInt32();
+                        poObj.MBR.YMax = ReadInt32();
+                        Read(ref poObj.Symbol);
+
+                        break; 
+                    #endregion
+                    #region GeometryType.REGION_C
+                    case GeometryType.REGION_C:
+                        //ShortRegion [ID 13] (length: &H25):
+                        //&H0     1       1       Identifier (Value: &HD) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     4       1       Offset of coordinate data in Coordinate Definition Block
+                        //&H9     4       1       Bytes to read for coordinates from Coordinate Definition Block [??]
+                        //&HD     2       1       Section count
+                        //&HF     4       2       Label X,Y
+                        //&H13    4       4       MBR
+                        //&H23    1       1       Line type number from Resource Block
+                        //&H24    1       1       Brush type number from Resource Block
+                        break; 
+                    #endregion
+                    #region GeometryType.REGION
+                    case GeometryType.REGION:
+                        //LongRegion [ID 14] (length: &H29):
+                        //&H0     1       1       Identifier (Value: &HE) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     4       1       Offset of coordinate data in Coordinate Definition Block
+                        //&H9     4       1       Bytes to read for coordinates from Coordinate Definition Block [??]
+                        //&HD     2       1       Section count
+                        //&HF     4       2       Label X,Y
+                        //&H17	4       4       MBR
+                        //&H27    1       1       Line type number from Resource Block
+                        //&H28    1       1       Brush type number from Resource Block
+                        break; 
+                    #endregion
                     //  case GeometryType.MULTIPLINE_C:
                     //  case GeometryType.MULTIPLINE:
                     //  case GeometryType.V450_REGION_C:
@@ -1129,20 +1202,166 @@ namespace MapInfo.IO
                     //  case GeometryType.V800_MULTIPLINE:
                     //    poObj = new TABMAPObjPLine;
                     //    break;
-                    //  case GeometryType.ARC_C:
-                    //  case GeometryType.ARC:
-                    //    poObj = new TABMAPObjArc;
+                    #region GeometryType.ARC_C
+                    case GeometryType.ARC_C:
+                        //ShortArc [ID 10] (length: &H16):
+                        //&H0     1       1       Identifier (Value: &HA) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     4       2       MBR of defining ellipse
+                        //&HD     4       2       MBR of the arc
+                        //&H15    1       1       Line type number from Resource Block
+                        break; 
+                    #endregion
+                    #region GeometryType.ARC
+                    case GeometryType.ARC:
+                        //LongArc [ID 11] (length: &H26):
+                        //&H0     1       1       Identifier (Value: &HB) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     4       4       MBR of defining ellipse
+                        //&15     4       4       MBR of the arc
+                        //&H25    1       1       Line type number from Resource Block
+                        break; 
+                    #endregion
+                        //poObj = new TABMAPObjArc;
                     //    break;
-                    //  case GeometryType.RECT_C:
-                    //  case GeometryType.RECT:
-                    //  case GeometryType.ROUNDRECT_C:
-                    //  case GeometryType.ROUNDRECT:
-                    //  case GeometryType.ELLIPSE_C:
-                    //  case GeometryType.ELLIPSE:
+                    #region GeometryType.RECT_C
+                    case GeometryType.RECT_C:
+                        //ShortRectangle [ID 19] (length: &HF):
+                        //&H0     1       1       Identifier (Value: &H10) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     2       4       MBR
+                        //&HD     1       1       Line type number in Resource Block
+                        //&HE     1       1       Brush type number in Resource Block
+                        break; 
+                    #endregion
+                    #region GeometryType.RECT
+                    case GeometryType.RECT:
+                        //LongRectangle [ID 20] (length: &H17):
+                        //&H0     1       1       Identifier (Value: &H17) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     4       4       MBR
+                        //&H15    1       1       Line type number from Resource Block
+                        //&H16    1       1       Brush type number from Resource Block
+                        break; 
+                    #endregion
+                    #region GeometryType.ROUNDRECT_C
+                    case GeometryType.ROUNDRECT_C:
+                        //ShortRoundRectangle [ID 22] (length: &H13):
+                        //&H0     1       1       Identifier (Value: &H16) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     2       1       XRadius
+                        //&H7     2       1       YRadius
+                        //&H9     2       4       MBR
+                        //&H11    1       1       Line type number from Resource Block
+                        //&H12    1       1       Brush type number from Resource Block
+                        break; 
+                    #endregion
+                    #region GeometryType.ROUNDRECT
+                    case GeometryType.ROUNDRECT:
+                        //LongRoundRectangle [ID 23] (length: &H1F):
+                        //&H0     1       1       Identifier (Value: &H16) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     4       1       XRadius
+                        //&H9     4       1       YRadius
+                        //&HD     4       4       MBR
+                        //&H1D    1       1       Line type number from Resource Block
+                        //&H1E    1       1       Brush type number from Resource Block
+                        break; 
+                    #endregion
+                    #region GeometryType.ELLIPSE_C
+                    case GeometryType.ELLIPSE_C:
+                        //ShortEllipse [ID 25] (length: &HF):
+                        //&H0     1       1       Identifier (Value: &H1A) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     2       4       MBR
+                        //&HD	1       1       Line type number from Resource Block
+                        //&HE	1       1       Brush type number from Resource Block
+                        break; 
+                    #endregion
+                    #region GeometryType.ELLIPSE
+                    case GeometryType.ELLIPSE:
+                        //LongEllipse [ID 26] (length: &H17):
+                        //&H0     1       1       Identifier (Value: &H1A) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     4       4       MBR
+                        //&H15    1       1       Line type number from Resource Block
+                        //&H16    1       1       Brush type number from Resource Block
+                        break; 
+                    #endregion
                     //    poObj = new TABMAPObjRectEllipse;
                     //    break;
-                    //  case GeometryType.TEXT_C:
-                    //  case GeometryType.TEXT:
+                    #region GeometryType.TEXT_C
+                    case GeometryType.TEXT_C:
+                        //ShortText [ID 16] (length: &H27)
+                        //&H0     1       1       Identifier (Value: &H10) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     4       1       Offset of text body in Coordinate Definition Block
+                        //&H9     2       1       Number of characters in text body
+                        //&HB     2       1       Justification spacing arrowtype:
+                        //                                flag 2^1 - centered text 
+                        //                                flag 2^2 - right aligned text 
+                        //                                flag 2^3 - line spacing 1.5 
+                        //                                flag 2^4 - line spacing 2.0 
+                        //                                flag 2^5 - label line: simple 
+                        //                                flag 2^6 - label line: arrow 
+                        //&HD     2       1       Text rotation angle (0.1 degrees)
+                        //&HF     1       1       FontStyle #1:
+                        //                                flag 2^0 - bold text 
+                        //                                flag 2^1 - italic text 
+                        //                                flag 2^2 - underlined text 
+                        //                                flag 2^3 - overlined text 
+                        //                                flag 2^4 - unknown 
+                        //                                flag 2^5 - shadowed text 
+                        //&H10    1       1       FontStyle #2:
+                        //                                flag 2^0 - box background 
+                        //                                flag 2^1 - halo background 
+                        //                                flag 2^2 - All Caps 
+                        //                                flag 2^3 - Expanded
+                        //&H11    3       1       Foreground color
+                        //&H14    3       1       Background color
+                        //&H17    2       2       Arrow endpoint coordinates
+                        //&H1B    2       1	Height
+                        //&H1D	1	1	Font name index
+                        //&H1E    2       4       MBR
+                        //&H26    1       1       Pen type from Resource Block
+                        break; 
+                    #endregion
+                    #region GeometryType.TEXT
+                    case GeometryType.TEXT:
+                        //LongText [ID 17] (length: &H32)
+                        //&H0     1       1       Identifier (Value: &H11) [!]
+                        //&H1     4       1       RowID - Validity: (+0 = Valid; +&H40000000 = Deleted)       
+                        //&H5     4       1       Offset of text body in Coordinate Definition Block
+                        //&H9     2       1       Number of characters in text body
+                        //&HC     2       1       Justification spacing arrowtype:
+                        //                                flag 2^1 - centered text 
+                        //                                flag 2^2 - right aligned text 
+                        //                                flag 2^3 - line spacing 1.5 
+                        //                                flag 2^4 - line spacing 2.0 
+                        //                                flag 2^5 - label line: simple 
+                        //                                flag 2^6 - label line: arrow 
+                        //&HD     2       1       Text rotation angle (0.1 degrees)
+                        //&HF     1       1       FontStyle #1:
+                        //                                flag 2^0 - bold text 
+                        //                                flag 2^1 - italic text 
+                        //                                flag 2^2 - underlined text 
+                        //                                flag 2^3 - overlined text 
+                        //                                flag 2^4 - unknown 
+                        //                                flag 2^5 - shadowed text 
+                        //&H10    1       1       FontStyle #2:
+                        //                                flag 2^0 - box background 
+                        //                                flag 2^1 - halo background 
+                        //                                flag 2^2 - All Caps 
+                        //                                flag 2^3 - Expanded
+                        //&H11    3       1       Foreground color
+                        //&H14    3       1       Background color
+                        //&H17    4       2       Arrow endpoint coordinates
+                        //&H1F    1       4	Height
+                        //&H20	1	1	Font name index
+                        //&H30    4       4       MBR
+                        //&H31    1       1       Pen type from Resource Block
+                        break; 
+                    #endregion
                     //    poObj = new TABMAPObjText;
                     //    break;
                     //  case GeometryType.MULTIPOINT_C:

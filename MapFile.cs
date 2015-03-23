@@ -169,6 +169,12 @@ namespace MapInfo.IO
 
         private DataRow _attributes;
 
+        public int CoordBlockPtr;
+
+        public int CoordDataSize;
+
+        public TABMAPVertex LabelLocation;
+
         #endregion
 
         #region Constructor

@@ -6,6 +6,8 @@ using MapAround.Geometry;
 using MapAround.Mapping;
 using MapAround.Indexing;
 using MapAround.Caching;
+using MapInfo.IO;
+
 
 namespace MapAround.DataProviders
 {
@@ -137,13 +139,13 @@ namespace MapAround.DataProviders
         //    List<Feature> polylines = new List<Feature>();
         //    List<Feature> polygons = new List<Feature>();
 
-            foreach (TABMAPObjHdr record in shapeFile.objects.fetures)
+            foreach (MapFileRecord record in shapeFile.objects.fetures)
             {
         //        if (!checkBounds ||
         //            (record.MaxX >= bounds.MinX && record.MaxY >= bounds.MinY &&
         //             record.MinX <= bounds.MaxX && record.MinY <= bounds.MaxY))
         //        {
-                Feature newFeature = null;
+                //Feature newFeature = null;
                 IGeometry geometry = geometryFromShapeRecord(record);
         //            if (geometry != null)
         //            {
@@ -169,7 +171,12 @@ namespace MapAround.DataProviders
             return result;
         }
 
-        //private IGeometry geometryFromMapRecord(mapFileRecord record)
+        private IGeometry geometryFromShapeRecord(MapFileRecord record)
+        {
+            throw new NotImplementedException();
+        }
+
+        //private IGeometry geometryFromMapRecord(MapFileRecord record)
         //{
         //    switch (record.ShapeType)
         //    {

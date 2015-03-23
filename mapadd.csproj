@@ -43,8 +43,14 @@
     <Compile Include="MapFile.cs" />
     <Content Include="MapShapeHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="TABFileDataProvider.cs" />
+    <Compile Include="TABFileDataProvider.cs" />
     <Compile Include="TABRawBinBlock.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\maparound.core\src\MapAround.Core\MapAround.Core.csproj">
+      <Project>{c02beda0-ca27-4764-8d96-4bd1ef228bf8}</Project>
+      <Name>MapAround.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
